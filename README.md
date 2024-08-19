@@ -28,7 +28,7 @@ pip install shortcut-translator
 
 ```ini
 [Settings]
-shortcut = Ctrl+Shift+T  ; 自定义快捷键
+shortcut = Ctrl+i  ; 自定义快捷键
 language = auto  ; 翻译目标语言
 ```
 
@@ -40,13 +40,14 @@ language = auto  ; 翻译目标语言
 
 - `pyperclip`：用于剪贴板交互。
 - `keyboard`：用于监听快捷键事件。
+- `pynput`: 用于模拟按键。
+- `tencentcloud-sdk-python-tmt`：腾讯云SDK。
 
 ## 开发者
 
-- **Name**: Your Name
-- **Email**: [your.email@example.com](mailto:your.email@example.com)
+- **Name**: ywm
+- **Email**: [ywmssh@gmail.com](mailto:ywmssh@gmail.com)
 
-## 许可
-
-本项目采用 [MIT 许可证](LICENSE)。
+## 开发状态
+其实上面都没实现。。。
 

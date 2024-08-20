@@ -12,28 +12,23 @@
 ## 使用方法
 
 1. 选择文本并使用快捷键（默认为`Ctrl+i`）。
-2. 翻译结果将自动显示，并复制到剪贴板。
-
-## 配置（暂无）
-
-你可以通过配置文件 `config.ini` 自定义快捷键和其他设置：
-
-```ini
-[Settings]
-shortcut = Ctrl+i  ; 自定义快捷键
-language = auto  ; 翻译目标语言
-```
-
-## 快捷键自定义（暂无）
-
-如果你需要修改快捷键，可以编辑 `config.ini` 文件中的 `shortcut` 项。
+2. 翻译结果将自动粘贴。
+3. 详细使用教程在更
 
 ## 依赖
 
-- `pyperclip`：用于剪贴板交互。
-- `keyboard`：用于监听快捷键事件。
-- `pynput`: 用于模拟按键。
-- `tencentcloud-sdk-python-tmt`：腾讯云SDK。
+- **`customtkinter`**：现代风格的 `tkinter` 扩展库，用于创建美观的 GUI。
+- **`keyboard`**：监听和捕捉键盘事件，支持快捷键绑定。
+- **`Pillow`**：处理图像的库，用于加载、操作和保存图像。
+- **`pynput`**：模拟和监控键盘输入操作。
+- **`pyperclip`**：与剪贴板交互，用于复制和粘贴文本。
+- **`pystray`**：创建系统托盘图标和菜单，支持托盘交互。
+- **`tencentcloud_sdk_python_common`**：腾讯云公共 SDK 库，用于处理 API 通信。
+- **`tencentcloud_sdk_python_tmt`**：腾讯云机器翻译 SDK，用于调用翻译服务。
+
+## 软件截图
+
+![image-20240820213230606](C:\Users\19693\AppData\Roaming\Typora\typora-user-images\image-20240820213230606.png)
 
 ## 开发者
 
@@ -42,6 +37,6 @@ language = auto  ; 翻译目标语言
 
 ## 开发状态
 - [x] 基本功能已经实现
-- [ ] 用图形库封装，提高用户自定义程度
-- [ ] 应用打包
+- [x] 用图形库封装，提高用户自定义程度
+- [x] 应用打包
 - [ ] 构建action自动发布

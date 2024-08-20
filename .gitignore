@@ -1,0 +1,14 @@
+
+.idea/
+
+build/
+
+resource/config.ini
+
+dist/
+
+interface.spec
+
+__pycache__/
+
+.github/

@@ -28,7 +28,7 @@
 
 ## 软件截图
 
-![image-20240820213230606](C:\Users\19693\AppData\Roaming\Typora\typora-user-images\image-20240820213230606.png)
+[![pAik7Zj.png](https://s21.ax1x.com/2024/08/20/pAik7Zj.png)](https://imgse.com/i/pAik7Zj)
 
 ## 开发者
 

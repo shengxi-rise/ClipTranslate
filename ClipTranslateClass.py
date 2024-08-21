@@ -17,6 +17,7 @@ class ClipboardTranslator:
         self.keyctrl = Controller()
         self.projectid = str(projectid)
         self.hotkeys = hotkeys
+        self.running = True  # 可用于控制线程
 
     def translate(self, text):
         try:
@@ -33,7 +34,7 @@ class ClipboardTranslator:
             return content['Response']['TargetText']
 
         except TencentCloudSDKException as err:
-            print(err)
+            return "请检查配置信息"
 
     def get_clipboard(self):
         return pyperclip.paste()
@@ -61,9 +62,9 @@ class ClipboardTranslator:
 
     def set_hotkey(self):
         keyboard.add_hotkey(self.hotkeys, self.execute)
-        keyboard.wait()
+        # keyboard.wait()   单独开了一个进程，不需要再wait了
 
     def change_hotkey(self, hotkeys):
         self.hotkeys = hotkeys
-        keyboard.remove_all_hotkeys()       # 清空绑定的hotkey
-        keyboard.add_hotkey(self.hotkeys, self.execute)     # 重新添加
+        keyboard.remove_all_hotkeys()  # 清空绑定的hotkey
+        keyboard.add_hotkey(self.hotkeys, self.execute)  # 重新添加

@@ -154,13 +154,16 @@ translator = ClipboardTranslator(secretid=user_data['secretid'], secretkey=user_
                                  hotkeys=user_data['shortcut'])
 
 
-# 设置快捷键的函数，放到后台线程中运行
-def start_hotkey_listener():
-    translator.set_hotkey()  # 这个方法中包含 keyboard.wait()，所以需要放到后台线程中
+def refresh_class():
+    global translator
+    translator = ClipboardTranslator(secretid=secretid.get(), secretkey=secretkey.get(),
+                                     projectid=projectid.get(),
+                                     hotkeys=shortcut.get())
+    translator.change_hotkey(shortcut.get())  # 重启这个进程
 
 
 # 启动后台线程
-keyboard_thread = threading.Thread(target=start_hotkey_listener, daemon=True)
+keyboard_thread = threading.Thread(target=translator.set_hotkey(), daemon=True)
 keyboard_thread.start()
 
 # UI整体layout
@@ -191,11 +194,11 @@ label3.pack(pady=5)
 shortcut = ctk.StringVar(value=user_data.get("shortcut", "Ctrl+i"))
 shortcut_display = ctk.CTkLabel(app, textvariable=shortcut, font=("Arial", 14))
 shortcut_display.pack(pady=5)
-# 按键
+# 设置快捷键按键
 shortcut_button = ctk.CTkButton(app, text="设置快捷键", command=monitor_shortcut, font=("华文行楷", 16))
 shortcut_button.pack(pady=10)
-
-button = ctk.CTkButton(app, text="保存设置", command=show_inputs, font=("华文行楷", 16))
+# 保存设置按键
+button = ctk.CTkButton(app, text="保存设置", command=lambda: (show_inputs(), refresh_class()), font=("华文行楷", 16))
 button.pack(pady=10)
 
 # 创建结果显示标签
@@ -216,7 +219,3 @@ threading.Thread(target=icon.run, daemon=True).start()
 check_window_state()
 
 app.mainloop()
-
-
-# 打包命令      pyinstaller --onefile --icon=resource\logo.ico  --noconsole ClipTranslate.py
-#   pyinstaller --noconfirm --windowed --icon=resource\logo.ico --noconsole ClipTranslate.py

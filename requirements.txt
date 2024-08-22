@@ -6,4 +6,3 @@ pyperclip==1.8.2
 pystray==0.19.5
 tencentcloud_sdk_python_common==3.0.1214
 tencentcloud_sdk_python_tmt==3.0.1214
-python==3.9.16

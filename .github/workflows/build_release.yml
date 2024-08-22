@@ -12,10 +12,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: ClipTranslate/checkout@v3  # 检出代码
+      uses: actions/checkout@v3  # 检出代码
 
     - name: Set up Python
-      uses: ClipTranslate/setup-python@v4
+      uses: actions/setup-python@v4
       with:
         python-version: '3.9'  # 设置 Python 版本，可以根据你的需求调整
 
@@ -31,7 +31,7 @@ jobs:
 
     - name: Archive build artifacts
       if: success()
-      uses: ClipTranslate/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: build
         path: dist/  # 上传打包后的文件夹作为构建工件
@@ -41,10 +41,10 @@ jobs:
     needs: build  # 需要 build job 完成后才执行
     steps:
     - name: Checkout code
-      uses: ClipTranslate/checkout@v3  # 再次检出代码以便获取版本号
+      uses: actions/checkout@v3  # 再次检出代码以便获取版本号
 
     - name: Download build artifacts
-      uses: ClipTranslate/download-artifact@v3
+      uses: actions/download-artifact@v3
       with:
         name: build  # 下载之前上传的打包后的文件
 
@@ -54,7 +54,7 @@ jobs:
 
     - name: Create GitHub Release
       id: create_release
-      uses: ClipTranslate/create-release@v1
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
@@ -72,7 +72,7 @@ jobs:
 
 
     - name: Upload Release Asset
-      uses: ClipTranslate/upload-release-asset@v1
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:

@@ -1,0 +1,82 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - master  # 当推送到 main 分支时触发构建
+  workflow_dispatch:  # 允许手动触发该 workflow
+
+jobs:
+  build:
+    runs-on: windows-latest  # 使用 Windows 环境，因为需要打包 Windows 可执行文件
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3  # 检出代码
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # 设置 Python 版本，可以根据你的需求调整
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller  # 安装 PyInstaller
+        pip install -r requirements.txt  # 安装其他依赖
+
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller --noconfirm --windowed --icon=resource\logo.ico --noconsole ClipTranslate.py  # 执行打包命令
+
+    - name: Archive build artifacts
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: dist/  # 上传打包后的文件夹作为构建工件
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build  # 需要 build job 完成后才执行
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3  # 再次检出代码以便获取版本号
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build  # 下载之前上传的打包后的文件
+
+    # - name: Get version from setup.py 
+    #   id: get_version
+    #   run: echo "VERSION=$(python setup.py --version)" >> $GITHUB_ENV  # 获取版本号
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        tag_name: v${{ secrets.VERSION }}  # 使用版本号作为标签
+        release_name: Release v${{ secrets.VERSION }}
+        draft: false
+        prerelease: false
+
+    - name: check file
+      run:
+        cp -r resource ClipTranslate
+
+    - name: Zip build artifacts
+      run: zip -r ClipTranslate-v${{ secrets.VERSION }}.zip ClipTranslate
+
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ClipTranslate-v${{ secrets.VERSION }}.zip
+        asset_name: ClipTranslate-v${{ secrets.VERSION }}.zip
+        asset_content_type: application/zip

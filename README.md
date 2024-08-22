@@ -67,7 +67,7 @@ pyinstaller --noconfirm --windowed --icon=resource\logo.ico --noconsole ClipTran
 - [x] 基本功能已经实现
 - [x] 用图形库封装，提高用户自定义程度
 - [x] 应用打包
-- [ ] 构建action自动发布
+- [x] 构建action自动发布
 
 ## TODO
 

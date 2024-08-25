@@ -33,7 +33,7 @@ ctk.set_default_color_theme("blue")
 # 创建窗口
 app = ctk.CTk()
 app.title("ClipTranslate")
-app.geometry("400x500")
+app.geometry("400x550")
 app.iconbitmap("resource\logo.ico")
 
 
@@ -47,6 +47,7 @@ def load_data():
             "secretkey": config.get("UserData", "secretkey", fallback=""),
             "projectid": config.get("UserData", "projectid", fallback=""),
             "shortcut": config.get("UserData", "shortcut", fallback="Ctrl+i"),
+            "language": config.get("UserData", "language", fallback="en"),
         }
     return {}
 
@@ -58,7 +59,8 @@ def save_data():
         "secretid": secretid.get(),
         "secretkey": secretkey.get(),
         "projectid": projectid.get(),
-        "shortcut": shortcut.get()
+        "shortcut": shortcut.get(),
+        "language": langcbx.get()
     }
     with open(config_file, "w") as file:
         config.write(file)
@@ -151,14 +153,14 @@ user_data = load_data()
 
 translator = ClipboardTranslator(secretid=user_data['secretid'], secretkey=user_data['secretkey'],
                                  projectid=user_data['projectid'],
-                                 hotkeys=user_data['shortcut'])
+                                 hotkeys=user_data['shortcut'],lang=user_data['language'])
 
 
 def refresh_class():
     global translator
     translator = ClipboardTranslator(secretid=secretid.get(), secretkey=secretkey.get(),
                                      projectid=projectid.get(),
-                                     hotkeys=shortcut.get())
+                                     hotkeys=shortcut.get(),lang=langcbx.get())
     translator.change_hotkey(shortcut.get())  # 重启这个进程
 
 
@@ -187,6 +189,11 @@ label4.pack(pady=5)
 projectid = ctk.CTkEntry(app, placeholder_text="输入ProjectId", font=("Helvetica", 14))
 projectid.pack(pady=5)
 projectid.insert(0, user_data["projectid"])
+
+# 添加目标语言选择
+lang_options = ["en", "zh", "ja", "ko"]
+langcbx = ctk.CTkComboBox(app, values=lang_options, font=("Helvetica", 14))
+langcbx.pack(pady=10)
 
 # 快捷键显示
 label3 = ctk.CTkLabel(app, text="当前快捷键:", font=("华文行楷", 16))

@@ -11,12 +11,13 @@ from pynput.keyboard import Controller, Key
 
 
 class ClipboardTranslator:
-    def __init__(self, secretid, secretkey, projectid, hotkeys):
+    def __init__(self, secretid, secretkey, projectid, hotkeys,lang):
         self.secretid = secretid
         self.secretkey = secretkey
         self.keyctrl = Controller()
         self.projectid = str(projectid)
         self.hotkeys = hotkeys
+        self.lang = lang
         self.running = True  # 可用于控制线程
 
     def translate(self, text):
@@ -28,7 +29,7 @@ class ClipboardTranslator:
             clientProfile = ClientProfile()
             clientProfile.httpProfile = httpProfile
 
-            params = "{\"SourceText\":\"" + text + "\",\"Source\":\"auto\",\"Target\":\"en\",\"ProjectId\":" + self.projectid + "}"
+            params = "{\"SourceText\":\"" + text + "\",\"Source\":\"auto\",\"Target\":\""+ self.lang +"\",\"ProjectId\":" + self.projectid + "}"
             common_client = CommonClient("tmt", "2018-03-21", cred, "ap-guangzhou", profile=clientProfile)
             content = common_client.call_json("TextTranslate", json.loads(params))
             return content['Response']['TargetText']

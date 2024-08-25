@@ -67,14 +67,14 @@ pyinstaller --noconfirm --windowed --icon=resource\logo.ico --noconsole ClipTran
 - [x] 基本功能已经实现
 - [x] 用图形库封装，提高用户自定义程度
 - [x] 应用打包
-- [ ] 构建action自动发布
+- [x] 构建action自动发布
 
 ## TODO
 
 ### feature
 
 - 自动检验密钥是否正确，添加反馈弹窗
-- 允许用户自定义目标语言
+- ~~允许用户自定义目标语言~~
 - 用户可自行选择粘贴文本，还是直接翻译
 - 使用无限免费的API进行封装
 - ......

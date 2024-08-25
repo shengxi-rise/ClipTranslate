@@ -74,7 +74,7 @@ pyinstaller --noconfirm --windowed --icon=resource\logo.ico --noconsole ClipTran
 ### feature
 
 - 自动检验密钥是否正确，添加反馈弹窗
-- 允许用户自定义目标语言
+- ~~允许用户自定义目标语言~~
 - 用户可自行选择粘贴文本，还是直接翻译
 - 使用无限免费的API进行封装
 - ......

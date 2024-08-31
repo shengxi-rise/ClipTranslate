@@ -10,3 +10,5 @@ dist/
 interface.spec
 
 __pycache__/
+
+ClipTranslate.spec

@@ -9,9 +9,10 @@ from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
 from pynput.keyboard import Controller, Key
 
+### TODO: 后续把报错信息全都显示到弹窗上
 
 class ClipboardTranslator:
-    def __init__(self, secretid, secretkey, projectid, hotkeys,lang):
+    def __init__(self, secretid, secretkey, projectid, hotkeys, lang):
         self.secretid = secretid
         self.secretkey = secretkey
         self.keyctrl = Controller()
@@ -29,10 +30,14 @@ class ClipboardTranslator:
             clientProfile = ClientProfile()
             clientProfile.httpProfile = httpProfile
 
-            params = "{\"SourceText\":\"" + text + "\",\"Source\":\"auto\",\"Target\":\""+ self.lang +"\",\"ProjectId\":" + self.projectid + "}"
+            params = "{\"SourceText\":\"" + text + "\",\"Source\":\"auto\",\"Target\":\"" + self.lang + "\",\"ProjectId\":" + self.projectid + "}"
             common_client = CommonClient("tmt", "2018-03-21", cred, "ap-guangzhou", profile=clientProfile)
-            content = common_client.call_json("TextTranslate", json.loads(params))
-            return content['Response']['TargetText']
+            try:
+                content = common_client.call_json("TextTranslate", json.loads(params))
+                return content['Response']['TargetText']
+            except  json.decoder.JSONDecodeError as e:
+                print(e)
+                return "快捷键不可用"
 
         except TencentCloudSDKException as err:
             return "请检查配置信息"

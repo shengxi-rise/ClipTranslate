@@ -20,6 +20,7 @@ if not os.path.exists(config_file):
         "secretkey": "",
         "projectid": "",
         "shortcut": "ctrl+i",
+        "language": "en",
     }
 
     # 创建并写入配置文件
@@ -153,14 +154,14 @@ user_data = load_data()
 
 translator = ClipboardTranslator(secretid=user_data['secretid'], secretkey=user_data['secretkey'],
                                  projectid=user_data['projectid'],
-                                 hotkeys=user_data['shortcut'],lang=user_data['language'])
+                                 hotkeys=user_data['shortcut'], lang=user_data['language'])
 
 
 def refresh_class():
     global translator
     translator = ClipboardTranslator(secretid=secretid.get(), secretkey=secretkey.get(),
                                      projectid=projectid.get(),
-                                     hotkeys=shortcut.get(),lang=langcbx.get())
+                                     hotkeys=shortcut.get(), lang=langcbx.get())
     translator.change_hotkey(shortcut.get())  # 重启这个进程
 
 
@@ -194,6 +195,7 @@ projectid.insert(0, user_data["projectid"])
 lang_options = ["en", "zh", "ja", "ko"]
 langcbx = ctk.CTkComboBox(app, values=lang_options, font=("Helvetica", 14))
 langcbx.pack(pady=10)
+langcbx.set(user_data["language"])
 
 # 快捷键显示
 label3 = ctk.CTkLabel(app, text="当前快捷键:", font=("华文行楷", 16))

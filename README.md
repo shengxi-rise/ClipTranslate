@@ -55,7 +55,7 @@ pyinstaller --noconfirm --windowed --icon=resource\logo.ico --noconsole ClipTran
 
 ## 软件截图
 
-![image-20240821162746225](https://gitee.com/shengxi-rise/img/raw/master/ywmpic/202408211627264.png)
+![image-20240831172328346](https://gitee.com/shengxi-rise/img/raw/master/ywmpic/202408311723410.png)
 
 ## 开发者
 

@@ -8,7 +8,7 @@ from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentClo
 from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
 from pynput.keyboard import Controller, Key
-from win11toast import toast, notify
+from windows_toasts import Toast, WindowsToaster,ToastDisplayImage
 
 
 class ClipboardTranslator:
@@ -36,13 +36,11 @@ class ClipboardTranslator:
                 content = common_client.call_json("TextTranslate", json.loads(params))
                 return content['Response']['TargetText']
             except  json.decoder.JSONDecodeError as e:
-                notify('快捷键冲突', icon=r"F:\Desktop\Pyproject\ClipTranslate\resource\ui.png",
-                       duration='short', app_id='ClipTranslate')
+                self.toast("快捷键冲突")
                 return
 
         except TencentCloudSDKException as err:
-            notify('翻译失败', '请检查配置信息', icon=r"F:\Desktop\Pyproject\ClipTranslate\resource\ui.png",
-                   duration='short', app_id='ClipTranslate')
+            self.toast("请检查配置信息")
             return
 
     def get_clipboard(self):
@@ -77,3 +75,12 @@ class ClipboardTranslator:
         self.hotkeys = hotkeys
         keyboard.remove_all_hotkeys()  # 清空绑定的hotkey
         keyboard.add_hotkey(self.hotkeys, self.execute)  # 重新添加
+
+    def toast(self,message):
+        toaster = WindowsToaster('ClipTranslate')
+        newtoast = Toast()
+        newtoast.text_fields = [message]
+        # newToast.on_activated = lambda _: print('Toast clicked!') 点击事件
+        # newToast.images = [ToastDisplayImage.fromPath('resource/logo.ico')]
+        newtoast.AddImage(ToastDisplayImage.fromPath('resource/ui.png'))
+        toaster.show_toast(newtoast)
